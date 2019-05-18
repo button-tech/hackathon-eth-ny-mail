@@ -19,7 +19,7 @@ function getEmailDataOld(id) {
     const thread = emailData.threads[Object.keys(emailData.threads)[0]];
     return {
         from: thread.from_email,
-        to: thread.to[0].split("<")[1].split(">")[0],
+        to: thread.to[0].indexOf("<") !== -1 ? thread.to[0].split("<")[1].split(">")[0] : thread.to[0],
         timestamp: thread.timestamp,
         body: thread.content_html,
         subject: thread.subject
