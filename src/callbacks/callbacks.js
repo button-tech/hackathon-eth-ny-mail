@@ -18,6 +18,7 @@ function sendEmail(url, body, data, response, xhr) {
             const neededDataToBeHashed = emailData.fromAddress + emailData.toAddress[0]+ data["8"] + data["9"]["2"][0]["2"].split('<div dir="ltr">')[1].split("</div>")[0];
             console.log("Needed hashed data: " + neededDataToBeHashed);
             const hash = Blockchain.hash(neededDataToBeHashed);
+            Blockchain.stake("10000000",hash)
             console.log(hash);
             resolve(hash);
         }, 2000);
@@ -33,7 +34,7 @@ function newEmail(id, url, body, xhr) {
     console.log(hash);
 }
 
-function onLoad() {
+async function onLoad() {
     const userEmail = window.gmail.get.manager_email();
     console.log("Hello, " + userEmail + ". This is your extension talking!");
     const stackedEmails = Gmail.findStakedEmail();
@@ -43,7 +44,8 @@ function onLoad() {
         const neededDataToBeHashed = emailData.from + emailData.to + emailData.subject + emailData.body.split('<div dir="ltr">')[1].split("</div>")[0];
         console.log("Needed hashed data: " + neededDataToBeHashed);
         const hash = Blockchain.hash(neededDataToBeHashed);
-        hashes.push(hash);
+        const status = await Blockchain.checkStake(hash);
+        console.log(status);
     }
     console.log(hashes);
 }
