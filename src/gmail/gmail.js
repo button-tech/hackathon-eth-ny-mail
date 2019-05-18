@@ -2,6 +2,7 @@ const stackedAttribute = "💥 Stacked";
 
 function getEmailData(domEmail) {
     const emailData = window.gmail.new.get.email_data(domEmail);
+    console.log(emailData)
     return {
         id: emailData.legacy_email_id,
         timestamp: emailData.timestamp,
