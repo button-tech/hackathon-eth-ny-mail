@@ -21,8 +21,5 @@ gmail.observe.on("load", () => {
 
     gmail.observe.after("send_message", Callbacks.sendEmail);
 
-    // gmail.observe.on('compose', function(compose, composeType) {
-    //     // compose type can be one of "reply" | "forward" | "compose"
-    //     alert('Compose object: ' + compose + 'compose type: ' + composeType);
-    // });
+    gmail.observe.on('compose', Callbacks.compose);
 });

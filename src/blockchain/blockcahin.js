@@ -1,5 +1,4 @@
 const Web3 = require('web3');
-const keythereum = require('keythereum');
 const web3Utils = require("web3-utils");
 const { ABI, address } = require("./contractData");
 
@@ -18,20 +17,23 @@ function getCallData(methodName, parameters) {
     return data;
 }
 
-async function stake(value, data) {
-    web3.eth.sendTransaction({
-        from: selectedAddress,
-        to: address,
-        value: value,
-        data: getCallData("stake", [data])
-    })
-        .on('transactionHash', function(hash){
-            console.log(hash);
+function stake(value, data) {
+    return new Promise(resolve => {
+        web3.eth.sendTransaction({
+            from: selectedAddress,
+            to: address,
+            value: value,
+            data: getCallData("stake", [data])
         })
-        .on('receipt', function(receipt) {
-            console.log(receipt);
-        })
-        .on('error', console.error); // If a out of gas error, the second parameter is the receipt.
+            // .on('transactionHash', function(hash){
+            //     console.log(hash);
+            // })
+            .on('confirmation', function(receipt) {
+                console.log("test")
+                resolve(receipt);
+            })
+            .on('error', console.error);
+    });
 }
 
 function checkStake(hash) {
