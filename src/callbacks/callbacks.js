@@ -1,30 +1,45 @@
 const views = require("../views/views");
-const gmail = require("../gmail/gmail");
+const Gmail = require("../gmail/gmail");
 const blockchain = require("../blockchain/blockcahin");
 
 function viewEmail(domEmail) {
-    alert(JSON.stringify(gmail.getEmailData(domEmail)));
+    alert(JSON.stringify(Gmail.getEmailData(domEmail)));
 }
 
 function httpEvent(params) {
     console.log(params)
-    gmail.sortMails();
 }
 
 function sendEmail(url, body, data, response, xhr) {
-    gmail.getLegacyIdFromSendMessage(response);
+    Gmail.getLegacyIdFromSendMessage(response);
 }
 
 function newEmail(id, url, body, xhr) {
-    console.log(id);
-    console.log(url)
-    console.log(body);
-    console.log(xhr)
+    const stackedEmails = Gmail.findStakedEmail();
+    const dataForHashing = [];
+    for (let i = 0; i < stackedEmails.length; i++) {
+        const emailData = Gmail.getEmailDataOld(stackedEmails[i].id);
+        dataForHashing.push(emailData);
+    }
+    console.log(dataForHashing);
+}
+
+function onLoad() {
+    const userEmail = window.gmail.get.manager_email();
+    console.log("Hello, " + userEmail + ". This is your extension talking!");
+    const stackedEmails = Gmail.findStakedEmail();
+    const dataForHashing = [];
+    for (let i = 0; i < stackedEmails.length; i++) {
+        const emailData = Gmail.getEmailDataOld(stackedEmails[i].id);
+        dataForHashing.push(emailData);
+    }
+    console.log(dataForHashing);
 }
 
 module.exports = {
     viewEmail: viewEmail,
     httpEvent: httpEvent,
     sendEmail: sendEmail,
-    newEmail: newEmail
+    newEmail: newEmail,
+    onLoad: onLoad
 };

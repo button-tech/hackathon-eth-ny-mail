@@ -10,8 +10,7 @@ window.gmail = gmail;
 window.$ = $;
 
 gmail.observe.on("load", () => {
-    const userEmail = gmail.get.manager_email();
-    console.log("Hello, " + userEmail + ". This is your extension talking!");
+    Callbacks.onLoad();
 
     // gmail.observe.on("http_event", Callbacks.httpEvent);
 
