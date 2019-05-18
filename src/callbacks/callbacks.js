@@ -11,17 +11,32 @@ function httpEvent(params) {
 }
 
 function sendEmail(url, body, data, response, xhr) {
-    const stackedEmails = Gmail.findStakedEmail();
-    const emailData = Gmail.getEmailDataOld(stackedEmails[0].id);
-    console.log(emailData);
-    const hash = Blockchain.hash(
-        emailData.from +
-        emailData.to +
-        emailData.subject +
-        emailData.body
-        // emailData.timestamp
-    );
-    console.log(hash);
+    console.log(response);
+    const id = Gmail.getLegacyIdFromSendMessage(response);
+    setTimeout(() => {
+        const idOld = Gmail.getEmailData(id).id;
+        const emailData = Gmail.getEmailDataOld(idOld);
+        console.log(emailData);
+        const hash = Blockchain.hash(
+            emailData.from +
+            emailData.to +
+            emailData.subject +
+            emailData.body
+            // emailData.timestamp
+        );
+        console.log(hash)
+    }, 2000);
+    // const stackedEmails = Gmail.findStakedEmail();
+    // const emailData = Gmail.getEmailDataOld(stackedEmails[0].id);
+    // console.log(emailData);
+    // const hash = Blockchain.hash(
+    //     emailData.from +
+    //     emailData.to +
+    //     emailData.subject +
+    //     emailData.body
+    //     // emailData.timestamp
+    // );
+    // console.log(hash);
 }
 
 function newEmail(id, url, body, xhr) {
