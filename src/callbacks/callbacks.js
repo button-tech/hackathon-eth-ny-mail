@@ -14,14 +14,14 @@ function sendEmail(url, body, data, response, xhr) {
     console.log(response);
     const id = Gmail.getLegacyIdFromSendMessage(response);
     setTimeout(() => {
-        const idOld = Gmail.getEmailData(id).id;
-        const emailData = Gmail.getEmailDataOld(idOld);
+        const emailData = Gmail.getEmailData(id);
+        // const emailData = Gmail.getEmailDataOld(idOld);
         console.log(emailData);
         const hash = Blockchain.hash(
-            emailData.from +
-            emailData.to +
+            emailData.fromAddress +
+            emailData.toAddress +
             emailData.subject +
-            emailData.body
+            emailData.contentHTML
             // emailData.timestamp
         );
         console.log(hash)
