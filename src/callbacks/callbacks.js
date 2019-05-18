@@ -12,7 +12,7 @@ function httpEvent(params) {
 
 function compose(compose, composeType) {
     // compose type can be one of "reply" | "forward" | "compose"
-    alert('Compose object: ' + compose + 'compose type: ' + composeType);
+    // alert('Compose object: ' + compose + 'compose type: ' + composeType);
     var compose_ref = gmail.dom.composes()[0];
     gmail.tools.add_compose_button(compose_ref, "Stake and send", function() {
         compose.subject("Staked "+compose.subject());
