@@ -11,35 +11,23 @@ function httpEvent(params) {
 }
 
 function sendEmail(url, body, data, response, xhr) {
-    console.log(response);
-    const id = Gmail.getLegacyIdFromSendMessage(response);
-    setTimeout(() => {
-        const emailData = Gmail.getEmailData(id);
-        console.log(emailData);
-        // const emailData = Gmail.getEmailDataOld(idOld);
-        const neededDataToBeHashed = emailData.fromAddress + emailData.toAddress[0] + data["8"] + data["9"]["2"][0]["2"];
-        console.log("Needed hashed data: " + neededDataToBeHashed);
-        const hash = Blockchain.hash(neededDataToBeHashed);
-        console.log(hash)
-    }, 2000);
-    // const stackedEmails = Gmail.findStakedEmail();
-    // const emailData = Gmail.getEmailDataOld(stackedEmails[0].id);
-    // console.log(emailData);
-    // const hash = Blockchain.hash(
-    //     emailData.from +
-    //     emailData.to +
-    //     emailData.subject +
-    //     emailData.body
-    //     // emailData.timestamp
-    // );
-    // console.log(hash);
+    return new Promise((resolve) => {
+        const id = Gmail.getLegacyIdFromSendMessage(response);
+        setTimeout(() => {
+            const emailData = Gmail.getEmailData(id);
+            const neededDataToBeHashed = emailData.fromAddress + emailData.toAddress[0]+ data["8"] + data["9"]["2"][0]["2"].split('<div dir="ltr">')[1].split("</div>")[0];
+            console.log("Needed hashed data: " + neededDataToBeHashed);
+            const hash = Blockchain.hash(neededDataToBeHashed);
+            console.log(hash);
+            resolve(hash);
+        }, 2000);
+    });
 }
 
 function newEmail(id, url, body, xhr) {
     const stackedEmails = Gmail.findStakedEmail();
     const emailData = Gmail.getEmailDataOld(stackedEmails[0].id);
-    const neededDataToBeHashed = emailData.from + emailData.to + emailData.subject + emailData.body;
-    console.log(emailData);
+    const neededDataToBeHashed = emailData.from + emailData.to + emailData.subject + emailData.body.split('<div dir="ltr">')[1].split("</div>")[0];
     console.log("Needed hashed data: " + neededDataToBeHashed);
     const hash = Blockchain.hash(neededDataToBeHashed);
     console.log(hash);
@@ -52,8 +40,7 @@ function onLoad() {
     const hashes = [];
     for (let i = 0; i < stackedEmails.length; i++) {
         const emailData = Gmail.getEmailDataOld(stackedEmails[i].id);
-        const neededDataToBeHashed = emailData.from + emailData.to + emailData.subject + emailData.body;
-        console.log(emailData);
+        const neededDataToBeHashed = emailData.from + emailData.to + emailData.subject + emailData.body.split('<div dir="ltr">')[1].split("</div>")[0];
         console.log("Needed hashed data: " + neededDataToBeHashed);
         const hash = Blockchain.hash(neededDataToBeHashed);
         hashes.push(hash);
