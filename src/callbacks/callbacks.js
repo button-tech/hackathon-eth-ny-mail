@@ -19,7 +19,7 @@ function sendEmail(url, body, data, response, xhr) {
         console.log(emailData);
         const hash = Blockchain.hash(
             emailData.fromAddress +
-            emailData.toAddress +
+            emailData.toAddress[0] +
             emailData.subject +
             emailData.contentHTML
             // emailData.timestamp
