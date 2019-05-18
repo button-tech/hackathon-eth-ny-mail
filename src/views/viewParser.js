@@ -1,5 +1,4 @@
 const fs = require("fs");
-const rp = require("request-promise");
 const jsdom = require("jsdom");
 const { JSDOM } = jsdom;
 const parsingFolder = "elements";

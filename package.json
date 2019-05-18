@@ -8,7 +8,7 @@
     "stage": "mkdir dist || echo Dist already exists.",
     "bundle": "browserify -o dist/extension.js src/extension.js",
     "render": "node src/views/viewParser.js",
-    "build": "npm run stage && npm run bundle && npm run render"
+    "build": "npm run render && npm run stage && npm run bundle"
   },
   "author": "krboktv, EnoRage",
   "license": "MIT",

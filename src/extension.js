@@ -1,6 +1,7 @@
 "use strict";
 
 console.log("Extension loading...");
+const Callbacks = require("./callbacks/callbacks");
 const jQuery = require("jquery");
 const $ = jQuery;
 const GmailFactory = require("gmail-js");
@@ -11,34 +12,7 @@ gmail.observe.on("load", () => {
     const userEmail = gmail.get.manager_email();
     console.log("Hello, " + userEmail + ". This is your extension talking!");
 
-    gmail.observe.on("view_email", (domEmail) => {
-        const emailData = gmail.new.get.email_data(domEmail);
-        const id = emailData.legacy_email_id;
-        const timestamp = emailData.timestamp;
-        const subject = emailData.subject;
-        const fromAddress = emailData.from.address;
-        const fromName = emailData.from.name;
-        const toAddress = emailData.to.map(x => x.address);
-        const toName = emailData.to.map(x => x.name);
-        const contentHTML = emailData.content_html;
-        const note = `
-        Email ID: ${id}
-        Timestamp: ${timestamp}
-        Subject: ${subject}
-        From:
-            Address: ${fromAddress}
-            Name: ${fromName}
-        To: 
-            Address: ${toAddress.join(", ")}
-            Name: ${toName.join(", ")}
-        HTML: ${contentHTML}`;
-        alert(note);
-
-        // Get current draft Email ID
-        const draftId = gmail.get.compose_ids();
-        alert("Last darftId: " + draftId);
-        console.log("Email data:", emailData);
-    });
+    gmail.observe.on("view_email", Callbacks.viewEmail);
 
     gmail.observe.on("new_email", function(id, url, body, xhr) {
         alert("id: " + id + "\nurl: " + url + '\nbody' + body + '\nxhr' + xhr);
