@@ -17,11 +17,24 @@
 
     "description": "",
 
+    "browser_action": {
+        "default_title": "Wyre",
+        "default_popup": "wyre/wyre.html"
+    },
+
+    "background": {
+        "scripts": ["wyre/background.js"],
+        "persistent": false
+    },
+
+
     "content_scripts": [
         {
             "matches": [ "*://mail.google.com/*" ],
             "js": [
-                "src/extensionInjector.js"
+                "src/extensionInjector.js",
+                "wyre/index.js",
+                "wyre/bs.js"
             ],
             "run_at": "document_end"
         }
