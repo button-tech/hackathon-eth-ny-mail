@@ -1,4 +1,4 @@
-const stackedAttribute = "Staked";
+const stackedAttribute = "💥 Staked";
 
 function getEmailData(domEmail) {
     const emailData = window.gmail.new.get.email_data(domEmail);

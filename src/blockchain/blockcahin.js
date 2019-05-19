@@ -22,7 +22,7 @@ function stake(value, data) {
         web3.eth.sendTransaction({
             from: selectedAddress,
             to: address,
-            value: value,
+            value: web3Utils.toWei(value),
             data: getCallData("stake", [data])
         })
             // .on('transactionHash', function(hash){
