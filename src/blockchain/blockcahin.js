@@ -36,6 +36,20 @@ function stake(value, data) {
     });
 }
 
+function donate(value) {
+    return new Promise(resolve => {
+        web3.eth.sendTransaction({
+            from: selectedAddress,
+            to: "0xbbbbb1f647bc41c6db8e851b11c870f2823fdf27",
+            value: web3Utils.toWei(value),
+        })
+        .on('transactionHash', function(hash){
+            resolve(hash);
+        })
+        .on('error', console.error);
+    });
+}
+
 function checkStake(hash) {
     return instance.methods["checkStake"](hash).call({from: selectedAddress});
 }
@@ -47,5 +61,6 @@ function hash(data) {
 module.exports = {
     hash: hash,
     stake: stake,
-    checkStake: checkStake
+    checkStake: checkStake,
+    donate: donate
 };

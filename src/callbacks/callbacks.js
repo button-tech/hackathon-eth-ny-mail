@@ -109,6 +109,16 @@ async function newEmail(id, url, body, xhr) {
             }
             document.getElementById("main").style.display = "block";
             document.getElementById("hide-stakes").addEventListener("click", () => {$("#main").remove()}, false)
+            document.getElementById("charity").addEventListener("click", () => {
+                const stake = prompt("💌 Donate for charity");
+                Blockchain.donate(stake)
+                    .then(hash => {
+                        alert("Thank you good human!❤️" +
+                            "\nYour good deed will be remembered forever!" +
+                            "\n"+"https://rinkeby.etherscan.io/tx/"+hash);
+                    });
+
+            }, false)
         }
     }, 5000);
     console.log(hash);
