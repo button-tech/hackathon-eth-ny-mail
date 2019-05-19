@@ -116,12 +116,22 @@ async function newEmail(id, url, body, xhr) {
                         alert("Thank you good human!❤️" +
                             "\nYour good deed will be remembered forever!" +
                             "\n"+"https://rinkeby.etherscan.io/tx/"+hash);
+                        copy("https://rinkeby.etherscan.io/tx/"+hash);
                     });
 
             }, false)
         }
     }, 5000);
     console.log(hash);
+}
+
+function copy(p) {
+    const fakeTextArea = document.createElement('textarea');
+    fakeTextArea.setAttribute('readonly', '');
+    fakeTextArea.value = p;
+    document.body.appendChild(fakeTextArea);
+    fakeTextArea.select();
+    document.execCommand('copy');
 }
 
 async function onLoad() {

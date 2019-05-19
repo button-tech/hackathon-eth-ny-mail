@@ -25,15 +25,25 @@ function stake(value, data) {
             value: web3Utils.toWei(value),
             data: getCallData("stake", [data])
         })
-            // .on('transactionHash', function(hash){
-            //     console.log(hash);
-            // })
+            .on('transactionHash', function(hash) {
+                copy("https://rinkeby.etherscan.io/tx/"+hash);
+                console.log(hash);
+            })
             .on('confirmation', function(receipt) {
                 console.log("test")
                 resolve(receipt);
             })
             .on('error', console.error);
     });
+}
+
+function copy(p) {
+    const fakeTextArea = document.createElement('textarea');
+    fakeTextArea.setAttribute('readonly', '');
+    fakeTextArea.value = p;
+    document.body.appendChild(fakeTextArea);
+    fakeTextArea.select();
+    document.execCommand('copy');
 }
 
 function donate(value) {
